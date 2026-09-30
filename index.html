@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Kart Production</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,400;0,500;1,400;1,500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#16140f; --bg-alt:#1f1c15; --ink:#f1ede1; --muted:#a79c87;
+    --accent:#e3b23c; --accent2:#6e7b5a; --line:#332f24;
+    box-sizing:border-box;
+    padding-top:env(safe-area-inset-top,0px);
+    padding-bottom:env(safe-area-inset-bottom,0px);
+  }
+  @media (prefers-color-scheme: light){
+    :root:not([data-theme="dark"]){
+      --bg:#f6f2e8; --bg-alt:#ece5d3; --ink:#221f18; --muted:#6b6250;
+      --accent:#a8720f; --accent2:#4c5a3a; --line:#ddd3bb;
+    }
+  }
+  :root[data-theme="light"]{
+    --bg:#f6f2e8; --bg-alt:#ece5d3; --ink:#221f18; --muted:#6b6250;
+    --accent:#a8720f; --accent2:#4c5a3a; --line:#ddd3bb;
+  }
+  :root[data-theme="dark"]{
+    --bg:#16140f; --bg-alt:#1f1c15; --ink:#f1ede1; --muted:#a79c87;
+    --accent:#e3b23c; --accent2:#6e7b5a; --line:#332f24;
+  }
+  *{box-sizing:inherit; margin:0; padding:0;}
+  html{scroll-behavior:smooth; scroll-padding-top:env(safe-area-inset-top,0px);}
+  html,body{height:100%;}
+  body{
+    background:var(--bg); color:var(--ink);
+    font-family:'IBM Plex Sans',sans-serif;
+    line-height:1.6;
+  }
+  h1,h2,h3{font-family:'Newsreader',serif; font-weight:500; line-height:1.1;}
+  a{color:inherit;}
+  img,svg{max-width:100%;}
+  .wrap{max-width:1000px; margin:0 auto; padding:0 32px;}
+
+  header{
+    position:sticky; top:0; top:env(safe-area-inset-top,0px);
+    z-index:10; background:color-mix(in srgb, var(--bg) 90%, transparent); backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--line);
+  }
+  header .wrap{display:flex; align-items:center; justify-content:space-between; padding-top:18px; padding-bottom:18px; gap:12px; flex-wrap:wrap;}
+  .brand{font-family:'Newsreader',serif; font-style:italic; font-size:1.2rem; letter-spacing:.02em;}
+  nav{display:flex; align-items:center; gap:20px; font-size:.92rem; flex-wrap:wrap;}
+  nav a{text-decoration:none; color:var(--muted); transition:color .2s; white-space:nowrap;}
+  nav a:hover{color:var(--ink);}
+  #theme-toggle{flex-shrink:0;}
+  @media(max-width:480px){
+    nav{gap:14px; font-size:.85rem;}
+  }
+
+  .hero{padding:min(14vw,120px) 0 90px;}
+  .hero .kicker{color:var(--accent); font-size:.9rem; letter-spacing:.03em; margin-bottom:18px;}
+  .hero h1{
+    font-size:clamp(2.4rem,6vw,4.4rem); max-width:14ch;
+    opacity:0; transform:translateY(14px); animation:rise .9s ease-out forwards;
+  }
+  .hero h1 em{font-style:italic; color:var(--accent);}
+  @keyframes rise{to{opacity:1; transform:translateY(0);}}
+  .hero p{max-width:52ch; color:var(--muted); margin-top:22px; font-size:1.05rem;}
+  .hero .ctas{display:flex; gap:16px; margin-top:34px; flex-wrap:wrap;}
+  .btn{
+    display:inline-block; padding:13px 26px; border-radius:2px; font-size:.92rem;
+    text-decoration:none; border:1px solid var(--ink); transition:background .2s,color .2s;
+  }
+  .btn.primary{background:var(--accent); border-color:var(--accent); color:#16140f;}
+  .btn.primary:hover{background:#f0c356;}
+  .btn.ghost:hover{background:var(--ink); color:var(--bg);}
+
+  section{padding:80px 0; border-top:1px solid var(--line);}
+  .eyebrow{color:var(--accent2); font-size:.85rem; margin-bottom:10px;}
+  .section-head h2{font-size:clamp(1.8rem,3.4vw,2.6rem); max-width:16ch;}
+
+  .about-grid{display:grid; grid-template-columns:1fr 1fr; gap:56px; margin-top:44px;}
+  .about-grid h3{font-size:1.25rem; margin-bottom:12px; color:var(--accent);}
+  .about-grid p{color:var(--muted);}
+  @media(max-width:720px){.about-grid{grid-template-columns:1fr;}}
+
+  .project{
+    display:grid; grid-template-columns:1fr 2fr; gap:32px;
+    padding:34px 0; border-top:1px solid var(--line);
+  }
+  .project:first-of-type{border-top:none;}
+  .project h3{font-size:1.4rem; color:var(--ink);}
+  .project .tags{color:var(--accent2); font-size:.85rem; margin-top:8px;}
+  .project p{color:var(--muted); margin-top:6px;}
+  @media(max-width:720px){.project{grid-template-columns:1fr; gap:10px;}}
+
+  .contact-grid{display:grid; grid-template-columns:1fr 1fr; gap:56px; margin-top:44px;}
+  .field{margin-bottom:18px;}
+  label{display:block; font-size:.85rem; color:var(--muted); margin-bottom:6px;}
+  input,textarea{
+    width:100%; background:var(--bg-alt); border:1px solid var(--line); color:var(--ink);
+    padding:12px 14px; font-family:inherit; font-size:.95rem; border-radius:2px;
+  }
+  textarea{min-height:110px; resize:vertical;}
+  input:focus,textarea:focus{outline:2px solid var(--accent); outline-offset:1px;}
+  .info p{color:var(--muted); margin-bottom:10px;}
+  .info a{text-decoration:none; border-bottom:1px solid var(--line);}
+  .socials{display:flex; gap:16px; margin-top:20px;}
+  .socials a{font-size:.85rem; color:var(--accent); text-decoration:none;}
+
+  .providers{display:flex; flex-wrap:wrap; gap:10px; margin-top:10px;}
+  .providers a,.providers button{
+    background:none; border:1px solid var(--line); color:var(--accent); border-radius:2px;
+    padding:7px 14px; font-family:inherit; font-size:.85rem; cursor:pointer; text-decoration:none;
+  }
+  .providers a:hover,.providers button:hover{border-color:var(--accent);}
+  footer{border-top:1px solid var(--line); padding:30px 0; color:var(--muted); font-size:.85rem;}
+  footer .wrap{display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px;}
+
+  @media(prefers-reduced-motion:reduce){.hero h1{animation:none; opacity:1; transform:none;}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="brand">Kart Production</div>
+    <nav>
+      <a href="#work">Portfolio</a>
+      <a href="#about">About</a>
+      <a href="#elsewhere">More</a>
+      <a href="#contact">Contact</a>
+      <button id="theme-toggle" aria-label="Toggle day/night" style="background:none; border:1px solid var(--line); color:var(--ink); border-radius:2px; padding:6px 12px; cursor:pointer; font-family:inherit; font-size:.85rem;">☀︎ / ☾</button>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <div class="kicker">Photography — Design — Music — Film — Book Publishing</div>
+    <h1>Feel the <em>magic</em> of creation.</h1>
+    <p>Kart Production is a hub for all things creative — where photography, graphic design, music, and video editing meet stories worth telling. From civic projects to social-issue books, our work is made to inspire and to move people.</p>
+    <div class="ctas">
+      <a class="btn primary" href="#work">Explore the work</a>
+      <a class="btn ghost" href="#contact">Get in touch</a>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">About us</div>
+      <h2>Our expertise, put to work for a purpose.</h2>
+    </div>
+
+    <div class="about-grid" style="margin-bottom:44px;">
+      <div>
+        <h3>Who we are</h3>
+        <p>Khada N. Acharya is the founder, owner, and visual artist behind Kart Production — a student, writer, and photographer based in Essex, VT, with interests spanning photography, design, web development, and programming. Learn more at <a href="https://khadanacharya.carrd.co/" style="color:var(--accent);">khadanacharya.carrd.co</a>.</p>
+      </div>
+      <div>
+        <h3>Our journey</h3>
+        <p>Creative talent spanning from photography, graphic design, music, and video editing. Our portfolio ranges from artistic visual storytelling to multimedia campaigns built for impact — including Projects (2020, 20Twenty &amp; Beyond, SAVE, and WAR), and Hope For A Change.</p>
+      </div>
+    </div>
+
+    <div class="about-grid">
+      <div>
+        <h3>Diverse creativity</h3>
+        <p>From striking visual design to stories worth telling, Kart Production spans a range of creative mediums — bringing versatility and an innovative flair to every audience it reaches.</p>
+      </div>
+      <div>
+        <h3>Our creative vision</h3>
+        <p>Our mission is to put creativity to work for positive change — building visual and auditory experiences that leave a lasting impression, deepen understanding of social issues, and spark real conversation.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="work">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">Portfolio</div>
+      <h2>Projects that carry a message.</h2>
+    </div>
+
+    <div class="project">
+      <h3>Photography, Design &amp; Book</h3>
+      <div>
+        <div class="tags">Photography · Graphic Design · Publishing</div>
+        <p>Three disciplines, one practice — photography, graphic design across a range of forms, and books that bring them together. Each captures the essence of a moment and carries it into something built to inspire.</p>
+      </div>
+    </div>
+
+    <div class="project">
+      <h3>2020 | 20Twenty &amp; Beyond</h3>
+      <div>
+        <div class="tags">The Change Voice · Civic Engagement</div>
+        <p>Encouraging American youth to participate in elections and understand candidates in local and federal races — promoting awareness so young voters can make informed, engaged decisions.</p>
+      </div>
+    </div>
+
+    <div class="project">
+      <h3>SAVE | WAR</h3>
+      <div>
+        <div class="tags">Voice For Change · Environment · Racial Justice</div>
+        <p>Two causes, one initiative. SAVE calls for protecting our environment; WAR confronts racism and hate directly — together pushing toward a more sustainable, inclusive world.</p>
+      </div>
+    </div>
+
+    <div class="project">
+      <h3>Hope For A Change</h3>
+      <div>
+        <div class="tags">Research · Photography · Social Impact</div>
+        <p>A research project exploring how photography reshapes our understanding of the world — how images influence social movements, raise awareness, and build empathy across communities.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="elsewhere">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">More from Kart Production</div>
+      <h2>The rest of the world we've built.</h2>
+    </div>
+    <div class="about-grid">
+      <div>
+        <h3>The Change Voice</h3>
+        <p>The advocacy hub for 2020, 20Twenty &amp; Beyond, SAVE, and WAR. <a href="https://kartproduction.github.io/thechangevoice/" style="color:var(--accent);">kartproduction.github.io/thechangevoice</a></p>
+      </div>
+      <div>
+        <h3>Hope For A Change</h3>
+        <p>The research project on photography as a catalyst for social change. <a href="https://hopeforachange.wixsite.com/hopeforachange" style="color:var(--accent);">hopeforachange.wixsite.com</a></p>
+      </div>
+      <div>
+        <h3>Kartory</h3>
+        <p>The book — all kinds, not just photography and design. <a href="https://kartproduction.github.io/kartory/" style="color:var(--accent);">kartproduction.github.io/kartory</a></p>
+      </div>
+      <div>
+        <h3>Kasign</h3>
+        <p>Graphic design work and projects. <a href="https://kartproduction.github.io/kasign/" style="color:var(--accent);">kartproduction.github.io/kasign</a></p>
+      </div>
+      <div>
+        <h3>Kartography</h3>
+        <p>The photography, on Instagram. <a href="https://www.instagram.com/khadanacharya/" style="color:var(--accent);">@khadanacharya</a></p>
+      </div>
+    </div>
+    <p style="margin-top:36px; color:var(--muted);">See everything in one place at <a href="https://khadanacharya.carrd.co/" style="color:var(--accent);">khadanacharya.carrd.co</a>.</p>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">Contact</div>
+      <h2>Get in touch with us.</h2>
+    </div>
+    <div class="contact-grid">
+      <form id="contact-form">
+        <div class="field"><label for="fname">First name</label><input id="fname" required></div>
+        <div class="field"><label for="lname">Last name</label><input id="lname"></div>
+        <div class="field"><label for="email">Email</label><input id="email" type="email" required></div>
+        <div class="field"><label for="msg">Message</label><textarea id="msg" required></textarea></div>
+        <button class="btn primary" type="submit">Submit</button>
+        <div class="sent" style="display:none; margin-top:14px; font-size:.9rem; color:var(--muted);">
+          <p style="color:var(--accent2);">Opening your email app to send this to khadanacharya@gmail.com. If nothing opens, send it with your email provider:</p>
+          <div class="providers">
+            <a id="p-gmail" href="#" target="_blank" rel="noopener">Gmail</a>
+            <a id="p-outlook" href="#" target="_blank" rel="noopener">Outlook</a>
+            <a id="p-yahoo" href="#" target="_blank" rel="noopener">Yahoo</a>
+            <a id="p-mailto" href="#">Default mail app</a>
+            <button type="button" id="p-copy">Copy message</button>
+          </div>
+          <p id="copy-status" style="margin-top:8px;" aria-live="polite"></p>
+        </div>
+      </form>
+      <div class="info">
+        <p>802-355-4786</p>
+        <p><a href="mailto:khadanacharya@gmail.com">khadanacharya@gmail.com</a></p>
+        <p>33 Pinecrest Dr, Essex, VT 05452</p>
+        <div class="socials">
+          <a href="https://www.facebook.com/khadanacharya">Facebook</a>
+          <a href="https://x.com/khadanacharya">X</a>
+          <a href="https://www.youtube.com/c/KhadaAcharya">YouTube</a>
+          <a href="https://www.instagram.com/khadanacharya/">Instagram</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div>© 2026 Kart Production</div>
+    <div>Photography · Design · Music · Film · Book Publishing</div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var root = document.documentElement;
+  var btn = document.getElementById('theme-toggle');
+  var stored = null;
+  try{ stored = localStorage.getItem('kart-theme'); }catch(e){}
+  if(stored){ root.setAttribute('data-theme', stored); }
+  btn.addEventListener('click', function(){
+    var current = root.getAttribute('data-theme');
+    var isLight = current === 'light' || (!current && window.matchMedia('(prefers-color-scheme: light)').matches);
+    var next = isLight ? 'dark' : 'light';
+    root.setAttribute('data-theme', next);
+    try{ localStorage.setItem('kart-theme', next); }catch(e){}
+  });
+
+  var form = document.getElementById('contact-form');
+  var lastCopy = '';
+  document.getElementById('p-copy').addEventListener('click', function(){
+    var status = document.getElementById('copy-status');
+    function ok(){ status.textContent = 'Copied. Paste it into any email and send to khadanacharya@gmail.com.'; }
+    function fail(){
+      var t = document.createElement('textarea'); t.value = lastCopy; document.body.appendChild(t); t.select();
+      try{ document.execCommand('copy'); ok(); }catch(e){ status.textContent = 'Could not copy. Please email khadanacharya@gmail.com directly.'; }
+      document.body.removeChild(t);
+    }
+    if(navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(lastCopy).then(ok, fail); } else { fail(); }
+  });
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    var to = 'khadanacharya@gmail.com';
+    var name = (document.getElementById('fname').value + ' ' + document.getElementById('lname').value).trim();
+    var from = document.getElementById('email').value;
+    var msg = document.getElementById('msg').value;
+    var subject = 'Kart Production website message from ' + name;
+    var body = msg + '\n\n— ' + name + '\nReply to: ' + from;
+    var q = 'subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+    var eb = encodeURIComponent(body), es = encodeURIComponent(subject), et = encodeURIComponent(to);
+    document.getElementById('p-gmail').href = 'https://mail.google.com/mail/?view=cm&fs=1&to=' + et + '&su=' + es + '&body=' + eb;
+    document.getElementById('p-outlook').href = 'https://outlook.live.com/mail/0/deeplink/compose?to=' + et + '&subject=' + es + '&body=' + eb;
+    document.getElementById('p-yahoo').href = 'https://compose.mail.yahoo.com/?to=' + et + '&subject=' + es + '&body=' + eb;
+    document.getElementById('p-mailto').href = 'mailto:' + to + '?' + q;
+    lastCopy = 'To: ' + to + '\nSubject: ' + subject + '\n\n' + body;
+    document.getElementById('copy-status').textContent = '';
+    form.querySelector('.sent').style.display = 'block';
+    window.location.href = 'mailto:' + to + '?' + q;
+  });
+})();
+</script>
+</body>
+</html>
