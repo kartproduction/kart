@@ -41,6 +41,7 @@ It is a single page with anchor-linked sections:
 | [Kasign](https://kartproduction.github.io/kasign/) | Graphic design work and projects |
 | [Kalendar by Kasign](https://kartproduction.github.io/kalendarbykasign/) | An offline-first calendar with photo-based designs ([source](https://github.com/kartproduction/kalendar)) |
 | [Kauncher](https://kartproduction.github.io/kauncher/) | A minimalist launcher for Android, with an iPhone web app ([source](https://github.com/kartproduction/kauncher)) |
+| [Kutout](https://kartproduction.github.io/Kutout/) | A free background remover for the browser, with an Android app ([source](https://github.com/kartproduction/Kutout)) |
 
 ## How it was made
 
@@ -50,7 +51,9 @@ A static single-page website hosted on GitHub Pages. It uses anchor navigation, 
 
 Copyright (c) 2026 Kart Production. All rights reserved.
 
-Viewing the website or its source code does not give you permission to copy, modify, redistribute, republish, rename, or repackage it. You may share a link to the website. The names Kart Production, Kasign, Kartory, Kalendar by Kasign, Kauncher, The Change Voice, and Hope For A Change, and their logos, may not be used for other projects without written permission. See [LICENSE](LICENSE) for the full terms.
+Viewing the website or its source code does not give you permission to copy, modify, redistribute, republish, rename, or repackage it. You may share a link to the website. The names Kart Production, Kasign, Kartory, Kalendar by Kasign, Kauncher, Kutout, The Change Voice, and Hope For A Change, and their logos, may not be used for other projects without written permission. See [LICENSE](LICENSE) for the full terms.
+
+Kutout is a separate project with its own license (AGPL-3.0) in [its own repository](https://github.com/kartproduction/Kutout). This license covers only this website.
 
 ## Contact
 
