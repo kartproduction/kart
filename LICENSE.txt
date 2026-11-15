@@ -22,7 +22,7 @@ other website, app, product or service without written permission.
 
 SEPARATE PROJECTS
 Kutout is a separate project with its own license in its own repository
-(https://github.com/kartproduction/Kutout). This license covers only this
+(https://github.com/kartproduction/kutout). This license covers only this
 website.
 
 THIRD-PARTY MATERIAL
